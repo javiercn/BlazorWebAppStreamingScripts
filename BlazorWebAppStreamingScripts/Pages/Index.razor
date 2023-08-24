@@ -1,0 +1,32 @@
+﻿@page "/"
+@attribute [StreamRendering(true)]
+
+<PageTitle>Home</PageTitle>
+
+<h1>Home</h1>
+
+Welcome to your new app.
+
+<ComponentRendersScripts OnReady="Complete"></ComponentRendersScripts>
+
+@if(_complete)
+{    
+    <ExpensiveComponent></ExpensiveComponent>
+}
+
+
+@code {
+    private bool _complete = false;
+    TaskCompletionSource _tcs = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await _tcs.Task;
+        _complete = true;
+    }
+
+    private void Complete()
+    {
+        _tcs.SetResult();
+    }
+}

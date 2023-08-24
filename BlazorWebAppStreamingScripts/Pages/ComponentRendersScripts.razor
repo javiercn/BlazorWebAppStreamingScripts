@@ -1,0 +1,13 @@
+@attribute [StreamRendering(true)]
+
+<p>Hello</p>
+
+@code{
+    [Parameter] public EventCallback OnReady { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Yield();
+        await OnReady.InvokeAsync();
+    }
+}
